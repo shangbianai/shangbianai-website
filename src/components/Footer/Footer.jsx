@@ -1,11 +1,10 @@
 import React, { useMemo } from 'react'
-import { ArrowRight, Facebook, Twitter, Linkedin, Instagram, Mail, Globe, MapPin } from 'lucide-react'
+import { ArrowRight, Facebook, Twitter, Linkedin, Instagram, Mail, Phone, MapPin } from 'lucide-react'
 import { translations } from '../../i18n/translations'
 import { useApp } from '../../context/AppContext'
-import Logo from '../Logo/Logo'
 
 const Footer = () => {
-  const { lang, setLeadForm } = useApp()
+  const { lang } = useApp()
   const t = useMemo(() => translations[lang], [lang])
   const footerLinks = {
     product: [
@@ -42,76 +41,53 @@ const Footer = () => {
   ]
 
   return (
-    <footer className="bg-white text-black border-t border-gray-200">
+    <footer className="bg-primary text-white">
       {/* Main CTA Section */}
-      <div className="py-16 bg-gray-50">
-        <div className="container-section">
+      <div className="bg-gradient-to-r from-primary to-secondary">
+        <div className="container-max section-padding">
           <div className="text-center">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-black">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
               {t.footer.topTitle1}
-              <span className="block text-black mt-2">{t.footer.topTitle2}</span>
+              <span className="block text-accent">{t.footer.topTitle2}</span>
             </h2>
-            <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">{t.footer.topDesc}</p>
-            <div className="flex justify-center">
-              <button 
-                onClick={() => setLeadForm({ 
-                  open: true, 
-                  title: "获取专业方案", 
-                  subtitle: "资深顾问为您提供定制化AI解决方案" 
-                })}
-                className="btn-primary text-lg inline-flex items-center justify-center group px-12 py-4"
-              >
+            <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">{t.footer.topDesc}</p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button className="bg-accent text-primary px-8 py-4 rounded-lg font-semibold hover:bg-yellow-400 transition-colors inline-flex items-center justify-center group">
                 {t.footer.topPrimary}
-                <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
+              <button className="border border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-primary transition-colors">{t.footer.topSecondary}</button>
             </div>
           </div>
         </div>
       </div>
       
       {/* Footer Links */}
-      <div className="container-section">
-        <div className="py-12 border-t border-gray-200">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-12">
+      <div className="container-max">
+        <div className="py-16 px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
             {/* Company Info */}
             <div className="lg:col-span-2">
-              {/* Logo */}
-              <div className="mb-8">
-                <Logo size="normal" className="" />
+              <div className="mb-6">
+                <span className="text-2xl font-bold text-accent">{t.brand.name}</span>
               </div>
+              <p className="text-gray-300 mb-6 leading-relaxed">{t.hero.subtitle}</p>
               
               {/* Contact Info */}
-              <div className="space-y-4 text-gray-600">
-                <div className="flex items-center space-x-4">
-                  <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
-                    <Mail className="w-5 h-5 text-gray-600" />
-                  </div>
-                  <span>{t.footer.contact.email}</span>
-                </div>
-                <div className="flex items-center space-x-4">
-                  <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
-                    <Globe className="w-5 h-5 text-gray-600" />
-                  </div>
-                  <a href={t.footer.contact.website} target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 transition-colors">
-                    {t.footer.contact.website}
-                  </a>
-                </div>
-                <div className="flex items-center space-x-4">
-                  <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
-                    <MapPin className="w-5 h-5 text-gray-600" />
-                  </div>
-                  <span>{t.footer.contact.address}</span>
-                </div>
+              <div className="space-y-3 text-sm text-gray-300">
+                <div className="flex items-center space-x-3"><Mail className="w-4 h-4" /><span>{t.footer.contact.email}</span></div>
+                <div className="flex items-center space-x-3"><Phone className="w-4 h-4" /><span>{t.footer.contact.phone}</span></div>
+                <div className="flex items-center space-x-3"><MapPin className="w-4 h-4" /><span>{t.footer.contact.address}</span></div>
               </div>
             </div>
             
             {/* Product Links */}
             <div>
-              <h3 className="font-bold text-black mb-6 text-lg">{t.footer.product}</h3>
-              <ul className="space-y-4">
+              <h3 className="font-semibold text-white mb-4">{t.footer.product}</h3>
+              <ul className="space-y-3">
                 {footerLinks.product.map((link, index) => (
                   <li key={index}>
-                    <a href={link.href} className="text-gray-600 hover:text-black transition-colors">
+                    <a href={link.href} className="text-gray-300 hover:text-accent transition-colors text-sm">
                       {link.name}
                     </a>
                   </li>
@@ -121,11 +97,11 @@ const Footer = () => {
             
             {/* Company Links */}
             <div>
-              <h3 className="font-bold text-black mb-6 text-lg">{t.footer.company}</h3>
-              <ul className="space-y-4">
+              <h3 className="font-semibold text-white mb-4">{t.footer.company}</h3>
+              <ul className="space-y-3">
                 {footerLinks.company.map((link, index) => (
                   <li key={index}>
-                    <a href={link.href} className="text-gray-600 hover:text-black transition-colors">
+                    <a href={link.href} className="text-gray-300 hover:text-accent transition-colors text-sm">
                       {link.name}
                     </a>
                   </li>
@@ -135,11 +111,11 @@ const Footer = () => {
             
             {/* Resources Links */}
             <div>
-              <h3 className="font-bold text-black mb-6 text-lg">{t.footer.resources}</h3>
-              <ul className="space-y-4">
+              <h3 className="font-semibold text-white mb-4">{t.footer.resources}</h3>
+              <ul className="space-y-3">
                 {footerLinks.resources.map((link, index) => (
                   <li key={index}>
-                    <a href={link.href} className="text-gray-600 hover:text-black transition-colors">
+                    <a href={link.href} className="text-gray-300 hover:text-accent transition-colors text-sm">
                       {link.name}
                     </a>
                   </li>
@@ -149,11 +125,11 @@ const Footer = () => {
             
             {/* Legal Links */}
             <div>
-              <h3 className="font-bold text-black mb-6 text-lg">{t.footer.legal}</h3>
-              <ul className="space-y-4">
+              <h3 className="font-semibold text-white mb-4">{t.footer.legal}</h3>
+              <ul className="space-y-3">
                 {footerLinks.legal.map((link, index) => (
                   <li key={index}>
-                    <a href={link.href} className="text-gray-600 hover:text-black transition-colors">
+                    <a href={link.href} className="text-gray-300 hover:text-accent transition-colors text-sm">
                       {link.name}
                     </a>
                   </li>
@@ -164,10 +140,10 @@ const Footer = () => {
         </div>
         
         {/* Bottom Bar */}
-        <div className="border-t border-gray-200 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
+        <div className="border-t border-gray-700 py-8 px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             {/* Copyright */}
-            <div className="text-gray-500">{t.footer.copyright}</div>
+            <div className="text-sm text-gray-400">{t.footer.copyright}</div>
             
             {/* Social Links */}
             <div className="flex items-center space-x-4">
@@ -175,7 +151,7 @@ const Footer = () => {
                 <a
                   key={index}
                   href={social.href}
-                  className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center text-gray-600 hover:text-black hover:bg-gray-200 transition-all duration-200"
+                  className="text-gray-400 hover:text-accent transition-colors p-2 hover:bg-gray-700 rounded-lg"
                   aria-label={social.name}
                 >
                   {social.icon}

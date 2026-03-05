@@ -20,78 +20,75 @@ const Resources = () => {
   ]
 
   return (
-    <section id="resources" className="section-spacing bg-white">
-      <div className="container-section">
-        {/* Section Header */}
-        <div className="text-center mb-20">
-          <h2 className="heading-section">
+    <section id="resources" className="section-padding bg-muted">
+      <div className="container-max">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
             {t.resources.header1}
-            <span className="block text-black">{t.resources.header2}</span>
+            <span className="block text-accent">{t.resources.header2}</span>
           </h2>
-          <p className="text-section max-w-3xl mx-auto">{t.resources.desc}</p>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">{t.resources.desc}</p>
         </div>
         
         {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-6 mb-20">
+        <div className="flex flex-wrap justify-center gap-4 mb-12">
           {categories.map((category, index) => (
             <button
               key={index}
-              className={`px-8 py-4 rounded-2xl font-medium transition-all duration-200 text-lg ${
+              className={`px-6 py-3 rounded-full font-medium transition-all duration-200 ${
                 category.active
-                  ? 'bg-primary text-white shadow-lg scale-105'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200 border border-gray-200'
+                  ? 'bg-primary text-white shadow-lg'
+                  : 'bg-white text-gray-600 hover:bg-gray-50 border'
               }`}
             >
               {category.name}
-              <span className="ml-3 text-sm opacity-75">({category.count})</span>
+              <span className="ml-2 text-sm opacity-75">({category.count})</span>
             </button>
           ))}
         </div>
         
         {/* Resources Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 mb-24">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {resources.map((resource, index) => (
-            <article key={index} className="group cursor-pointer">
-              {/* Card */}
-              <div className="bg-white rounded-3xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg hover:border-gray-300 transition-all duration-300">
-                {/* Image */}
-                <div className="relative overflow-hidden">
-                  <img 
-                    src={resource.image} 
-                    alt={resource.title}
-                    className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute top-6 left-6">
-                    <span className={`inline-flex items-center px-4 py-2 rounded-xl text-sm font-medium shadow-lg ${
-                      resource.type === 'Guide' ? 'bg-blue-600 text-white' :
-                      resource.type === 'Video' ? 'bg-red-600 text-white' :
-                      'bg-green-600 text-white'
-                    }`}>
-                      {resource.icon}
-                      <span className="ml-2">{resource.type}</span>
-                    </span>
-                  </div>
+            <article key={index} className="card group cursor-pointer">
+              {/* Image */}
+              <div className="relative overflow-hidden rounded-lg mb-6">
+                <img 
+                  src={resource.image} 
+                  alt={resource.title}
+                  className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute top-4 left-4">
+                  <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
+                    resource.type === 'Guide' ? 'bg-blue-100 text-blue-800' :
+                    resource.type === 'Video' ? 'bg-red-100 text-red-800' :
+                    'bg-green-100 text-green-800'
+                  }`}>
+                    {resource.icon}
+                    <span className="ml-2">{resource.type}</span>
+                  </span>
+                </div>
+              </div>
+              
+              {/* Content */}
+              <div className="space-y-3">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-accent font-medium">{resource.category}</span>
+                  <span className="text-gray-500">{resource.readTime}</span>
                 </div>
                 
-                {/* Content */}
-                <div className="p-8">
-                  <div className="flex items-center justify-between text-sm mb-4">
-                    <span className="text-primary font-semibold bg-primary/10 px-3 py-1 rounded-lg">{resource.category}</span>
-                    <span className="text-gray-500">{resource.readTime}</span>
-                  </div>
-                  
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-primary transition-colors leading-tight">
-                    {resource.title}
-                  </h3>
-                  
-                  <p className="text-gray-600 leading-relaxed mb-6 text-lg">
-                    {resource.description}
-                  </p>
-                  
-                  <div className="flex items-center text-primary font-semibold group-hover:translate-x-1 transition-transform">
-                    <span>{t.resources.list.readmore}</span>
-                    <ArrowRight className="w-5 h-5 ml-2" />
-                  </div>
+                <h3 className="text-xl font-semibold text-primary group-hover:text-accent transition-colors">
+                  {resource.title}
+                </h3>
+                
+                <p className="text-gray-600 leading-relaxed">
+                  {resource.description}
+                </p>
+                
+                <div className="flex items-center text-primary font-medium group-hover:text-accent transition-colors">
+                  <span className="text-sm">{t.resources.list.readmore}</span>
+                  <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
             </article>
@@ -99,21 +96,21 @@ const Resources = () => {
         </div>
         
         {/* Newsletter Signup */}
-        <div className="bg-gradient-to-br from-gray-50 to-white rounded-3xl p-12 border border-gray-200 shadow-sm">
-          <div className="max-w-3xl mx-auto text-center">
-            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">{t.resources.list.newsletterTitle}</h3>
-            <p className="text-xl text-gray-600 mb-10 leading-relaxed">{t.resources.list.newsletterDesc}</p>
+        <div className="bg-white rounded-2xl p-8 shadow-lg">
+          <div className="max-w-2xl mx-auto text-center">
+            <h3 className="text-2xl font-bold text-primary mb-4">{t.resources.list.newsletterTitle}</h3>
+            <p className="text-gray-600 mb-6">{t.resources.list.newsletterDesc}</p>
             
-            <div className="flex flex-col sm:flex-row gap-6 max-w-lg mx-auto">
+            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
               <input 
                 type="email" 
-                placeholder="输入您的邮箱地址"
-                className="flex-1 px-6 py-4 border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-lg"
+                placeholder="Enter your email"
+                className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
               />
-              <button className="btn-primary text-lg whitespace-nowrap">{t.resources.list.subscribe}</button>
+              <button className="btn-primary whitespace-nowrap">{t.resources.list.subscribe}</button>
             </div>
             
-            <p className="text-sm text-gray-500 mt-6">{t.resources.list.privacy}</p>
+            <p className="text-xs text-gray-500 mt-4">{t.resources.list.privacy}</p>
           </div>
         </div>
       </div>

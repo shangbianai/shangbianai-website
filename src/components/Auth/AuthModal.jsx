@@ -11,7 +11,6 @@ const AuthModal = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [agreeToTerms, setAgreeToTerms] = useState(false)
   const [error, setError] = useState('')
 
   if (!authModal.open) return null
@@ -24,7 +23,6 @@ const AuthModal = () => {
     if (!emailRegex.test(email)) return setError(t.auth.invalidEmail)
     if (!password) return setError(t.auth.required)
     if (authModal.mode === 'register' && password !== confirmPassword) return setError(t.auth.passwordMismatch)
-    if (authModal.mode === 'register' && !agreeToTerms) return setError(t.auth.agreeRequired)
 
     const fakeUser = { id: Date.now(), email }
     setUser(fakeUser)
@@ -56,43 +54,10 @@ const AuthModal = () => {
             <input value={password} onChange={(e)=>setPassword(e.target.value)} type="password" className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary focus:outline-none"/>
           </div>
           {authModal.mode === 'register' ? (
-            <>
-              <div>
-                <label className="block text-sm text-gray-600 mb-1">{t.auth.confirmPassword}</label>
-                <input value={confirmPassword} onChange={(e)=>setConfirmPassword(e.target.value)} type="password" className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary focus:outline-none"/>
-              </div>
-              
-              {/* 用户协议勾选 */}
-              <div className="flex items-start space-x-3 py-3">
-                <input 
-                  type="checkbox" 
-                  id="agreeToTerms"
-                  checked={agreeToTerms}
-                  onChange={(e) => setAgreeToTerms(e.target.checked)}
-                  className="mt-1 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
-                />
-                <label htmlFor="agreeToTerms" className="text-sm text-gray-600 leading-relaxed">
-                  {t.auth.agreeText}
-                  <a 
-                    href="/legal/user-agreement.html" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-blue-600 hover:text-blue-800 underline mx-1"
-                  >
-                    {t.auth.userAgreement}
-                  </a>
-                  {t.auth.and}
-                  <a 
-                    href="/legal/privacy-policy.html" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-blue-600 hover:text-blue-800 underline mx-1"
-                  >
-                    {t.auth.privacyPolicy}
-                  </a>
-                </label>
-              </div>
-            </>
+            <div>
+              <label className="block text-sm text-gray-600 mb-1">{t.auth.confirmPassword}</label>
+              <input value={confirmPassword} onChange={(e)=>setConfirmPassword(e.target.value)} type="password" className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary focus:outline-none"/>
+            </div>
           ) : null}
 
           <button type="submit" className="btn-primary w-full">
