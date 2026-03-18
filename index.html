@@ -19,9 +19,269 @@
     <link rel="modulepreload" crossorigin href="./assets/vendor-b1791c80.js">
     <link rel="modulepreload" crossorigin href="./assets/icons-27d3be01.js">
     <link rel="stylesheet" href="./assets/index-e46fcc68.css">
+    <style>
+      .hero-contact-cards {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        width: 260px;
+        background: rgba(255, 255, 255, 0.96);
+        border-radius: 16px;
+        padding: 16px;
+        box-shadow: 0 20px 48px rgba(0, 0, 0, 0.14);
+      }
+      .hero-contact-cards h3 {
+        margin: 0;
+        font-size: 15px;
+        font-weight: 700;
+        color: #0f172a;
+      }
+      .hero-contact-cards p {
+        margin: 0;
+        font-size: 12px;
+        color: #475569;
+        line-height: 1.5;
+      }
+      .hero-contact-cards img {
+        width: 100%;
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+      }
+      .hero-contact-card-item {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .custom-cert-wrapper {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+      .custom-cert-header {
+        text-align: center;
+        margin-bottom: 28px;
+      }
+      .custom-cert-header h2 {
+        margin: 0;
+        font-size: 38px;
+        font-weight: 800;
+        color: #0f172a;
+        letter-spacing: 1px;
+      }
+      .custom-cert-header p {
+        margin: 12px 0 0;
+        font-size: 16px;
+        color: #475569;
+      }
+      .custom-cert-image {
+        width: 100%;
+        border-radius: 18px;
+        border: 1px solid #dbeafe;
+        box-shadow: 0 22px 50px rgba(30, 64, 175, 0.14);
+      }
+      .custom-modal-card {
+        margin-top: 14px;
+        padding: 12px;
+        border-radius: 12px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+      }
+      .custom-modal-card img {
+        width: 100%;
+        border-radius: 10px;
+        display: block;
+      }
+      .custom-modal-card p {
+        margin: 8px 0 0;
+        text-align: center;
+        color: #475569;
+        font-size: 12px;
+      }
+      @media (min-width: 1024px) {
+        #hero {
+          position: relative;
+        }
+        .hero-contact-cards {
+          position: absolute;
+          right: 72px;
+          top: 132px;
+          z-index: 5;
+        }
+      }
+      @media (max-width: 1023px) {
+        .hero-contact-cards {
+          width: 100%;
+          max-width: 340px;
+          margin: 20px auto 0;
+        }
+        .custom-cert-header h2 {
+          font-size: 30px;
+        }
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
-    
+    <script>
+      (function () {
+        function findByText(selector, text) {
+          return Array.from(document.querySelectorAll(selector)).find(
+            (el) => el.textContent && el.textContent.trim() === text
+          );
+        }
+
+        function ensureHeroContacts() {
+          const hero = document.querySelector("#hero");
+          if (!hero) return;
+
+          const h1 = hero.querySelector("h1");
+          if (h1) {
+            const parts = Array.from(h1.children);
+            if (parts.length >= 2) {
+              if (parts[0].textContent !== "熵变智元") {
+                parts[0].textContent = "熵变智元";
+              }
+              if (parts[1].textContent !== "开创中国AI智能营销新范式") {
+                parts[1].textContent = "开创中国AI智能营销新范式";
+              }
+            } else {
+              if (h1.textContent !== "熵变智元 开创中国AI智能营销新范式") {
+                h1.textContent = "熵变智元 开创中国AI智能营销新范式";
+              }
+            }
+          }
+
+          if (hero.querySelector(".hero-contact-cards")) return;
+
+          const cardWrap = document.createElement("div");
+          cardWrap.className = "hero-contact-cards";
+          cardWrap.innerHTML = `
+            <div class="hero-contact-card-item">
+              <h3>企微联系人</h3>
+              <p>扫码添加企业微信，获取1对1顾问支持</p>
+              <img src="/images/wechat-card.jpg" alt="企微联系人名片" />
+            </div>
+            <div class="hero-contact-card-item">
+              <h3>公众号二维码</h3>
+              <p>扫码关注公众号，获取AI营销实战内容</p>
+              <img src="/images/wechat-card.jpg" alt="公众号二维码示例" />
+            </div>
+          `;
+          hero.appendChild(cardWrap);
+        }
+
+        function ensureCertSection() {
+          const pricing = document.querySelector("#pricing");
+          if (!pricing) return;
+          if (!pricing.querySelector(".custom-cert-wrapper")) {
+            pricing.className = "section-spacing bg-white";
+            pricing.innerHTML = `
+              <div class="custom-cert-wrapper">
+                <div class="custom-cert-header">
+                  <h2>火山引擎官方合作授权</h2>
+                  <p>熵变智元（北京）科技有限公司 · 官方合作伙伴授权证明</p>
+                </div>
+                <img class="custom-cert-image" src="/images/volcengine-cert.png" alt="火山引擎官方合作授权证书" />
+              </div>
+            `;
+          }
+        }
+
+        function removeShowcaseSection() {
+          const showcase = document.querySelector("#productShowcase");
+          if (showcase) {
+            showcase.remove();
+          }
+        }
+
+        function updateTrialModal() {
+          const title = findByText("h2", "申请免费试用");
+          if (!title) return;
+          const header = title.parentElement;
+          const modal = header && header.parentElement;
+          if (!modal) return;
+          const submitBtn = findByText("button", "立即提交");
+          if (!submitBtn || !modal.contains(submitBtn)) return;
+          const fieldsContainer = submitBtn.parentElement;
+          if (!fieldsContainer) return;
+
+          const nameInput = fieldsContainer.querySelector('input[placeholder="请输入您的姓名"]');
+          const phoneInput = fieldsContainer.querySelector('input[placeholder="请输入您的手机号码"]');
+          const companyInput = fieldsContainer.querySelector('input[placeholder="请输入您的公司名称"]');
+          if (!nameInput || !phoneInput || !companyInput) return;
+
+          const nameWrap = nameInput.parentElement;
+          const phoneWrap = phoneInput.parentElement;
+          const companyWrap = companyInput.parentElement;
+          if (!nameWrap || !phoneWrap || !companyWrap) return;
+
+          const inputWrappers = Array.from(fieldsContainer.children).filter((el) =>
+            el.querySelector("input, textarea")
+          );
+          inputWrappers.forEach((el) => {
+            if (el !== nameWrap && el !== phoneWrap && el !== companyWrap) {
+              el.remove();
+            }
+          });
+
+          const nameLabel = nameWrap.querySelector("div");
+          if (nameLabel) nameLabel.textContent = "姓名 *";
+          const phoneLabel = phoneWrap.querySelector("div");
+          if (phoneLabel) phoneLabel.textContent = "电话 *";
+          const companyLabel = companyWrap.querySelector("div");
+          if (companyLabel) companyLabel.textContent = "公司名称";
+
+          let wechatWrap = fieldsContainer.querySelector(".custom-wechat-field");
+          if (!wechatWrap) {
+            wechatWrap = phoneWrap.cloneNode(true);
+            wechatWrap.classList.add("custom-wechat-field");
+            const wechatLabel = wechatWrap.querySelector("div");
+            if (wechatLabel) wechatLabel.textContent = "微信";
+            const wechatInput = wechatWrap.querySelector("input");
+            if (wechatInput) {
+              wechatInput.value = "";
+              wechatInput.type = "text";
+              wechatInput.placeholder = "请输入您的微信号";
+            }
+          }
+
+          fieldsContainer.insertBefore(nameWrap, submitBtn);
+          fieldsContainer.insertBefore(phoneWrap, submitBtn);
+          fieldsContainer.insertBefore(wechatWrap, submitBtn);
+          fieldsContainer.insertBefore(companyWrap, submitBtn);
+
+          if (!modal.querySelector(".custom-modal-card")) {
+            const card = document.createElement("div");
+            card.className = "custom-modal-card";
+            card.innerHTML = `
+              <img src="/images/wechat-card.jpg" alt="企微名片" />
+              <p>扫码可直达企业微信联系人</p>
+            `;
+            fieldsContainer.insertAdjacentElement("afterend", card);
+          }
+        }
+
+        function applyCustomizations() {
+          ensureHeroContacts();
+          ensureCertSection();
+          removeShowcaseSection();
+          updateTrialModal();
+        }
+
+        let scheduled = false;
+        const observer = new MutationObserver(() => {
+          if (scheduled) return;
+          scheduled = true;
+          requestAnimationFrame(() => {
+            scheduled = false;
+            applyCustomizations();
+          });
+        });
+
+        observer.observe(document.documentElement, { childList: true, subtree: true });
+        document.addEventListener("DOMContentLoaded", applyCustomizations);
+        window.addEventListener("load", applyCustomizations);
+      })();
+    </script>
   </body>
 </html>
